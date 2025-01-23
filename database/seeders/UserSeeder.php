@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'surnames' => 'Administrator',
             'email' => 'admin@example.com',
-            'department_id' => $department ? $department->id : null, // Si existe el departamento, asignar, si no, asignar null
+            'department_id' => null, 
             'password' => Hash::make('qwerty-1234'), // Contraseña predeterminada
             'role' => 'admin',
         ]);
