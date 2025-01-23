@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('surnames');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('department_id');
-            $table->string('password');
+            $table->foreignId('department_id')->nullable()->constrained()->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });
