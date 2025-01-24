@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -11,9 +12,8 @@ class DashboardController extends Controller
         $showUsers = false;
 
         if ($request->has('showUsers') && auth()->user()->role === 'admin') {
-            $showUsers = true; // Si la URL tiene el parámetro showUsers, lo establecemos a true
+            $showUsers = true;
         }
-
         return view('dashboard', compact('showUsers'));
     }
 }
