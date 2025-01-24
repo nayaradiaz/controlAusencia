@@ -26,5 +26,14 @@ class UserSeeder extends Seeder
             'password' => Hash::make('qwerty-1234'), // Contraseña predeterminada
             'role' => 'admin',
         ]);
+         // Crear el usuario Admin
+         User::create([
+            'name' => 'usuario',
+            'surnames' => 'usuario',
+            'email' => 'usuario@example.com',
+            'department_id' => $department['id'], 
+            'password' => Hash::make('qwerty-1234'), // Contraseña predeterminada
+            'role' => 'usuario',
+        ]);
     }
 }

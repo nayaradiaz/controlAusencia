@@ -1,22 +1,25 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\AdminUserController;
 
 Route::view('/', 'welcome');
 
-Route::middleware(['auth', 'is_admin'])->group(function () {
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
-});
-Route::post('/users/upload-csv', [UserController::class, 'uploadCsv'])->name('users.uploadCsv');
+// Ruta para acceder a la vista de administrar usuarios solo si el usuario tiene el rol 'admin'
+Route::middleware('auth')->get('/admin/usuarios', function () {
+    // Verificar si el usuario autenticado es un administrador
+    if (auth()->user()->role !== 'admin') {
+        return redirect('/dashboard');  // Redirigir al dashboard si no es admin
+    }
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    // Si es admin, muestra la vista correspondiente
+    return view('admin.usuarios.index');
+})->name('admin.usuarios.index');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+// Otras rutas de tu aplicación
+Route::view('dashboard', 'dashboard')->middleware('auth')->name('dashboard');
+Route::view('profile', 'profile')->middleware('auth')->name('profile');
+
 
 require __DIR__ . '/auth.php';
