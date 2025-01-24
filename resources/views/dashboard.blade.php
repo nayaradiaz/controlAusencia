@@ -12,14 +12,9 @@
 
                 <div>
 
-                    <div>
-                        @if($showUsers)
-                        @livewire('admin-users')
-                        @else
-                        <h2>Bienvenido al Dashboard</h2>
-                        @endif
-                    </div>
-
+                    @role('Admin')
+                    @livewire('admin-users')
+                    @endrole
                 </div>
             </div>
         </div>
