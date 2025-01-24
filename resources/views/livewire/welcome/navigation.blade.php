@@ -1,4 +1,4 @@
-<nav class="-mx-3 flex flex-1 justify-center">
+<nav class=" flex flex-1 justify-center">
     @auth
         <a
             href="{{ url('/dashboard') }}"
@@ -9,7 +9,7 @@
     @else
         <a
             href="{{ route('login') }}"
-            class=" bg-sky-900 rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+            class=" hover:underline-offset-8 hover:decoration-2 hover:underline  rounded-md p-3 text-white"
         >
             Iniciar Sesión
         </a>
