@@ -2,20 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AdminUserController;
+use App\Http\Livewire\AdminUsers;
 
 Route::view('/', 'welcome');
 
-// Ruta para acceder a la vista de administrar usuarios solo si el usuario tiene el rol 'admin'
-Route::middleware('auth')->get('/admin/usuarios', function () {
-    // Verificar si el usuario autenticado es un administrador
-    if (auth()->user()->role !== 'admin') {
-        return redirect('/dashboard');  // Redirigir al dashboard si no es admin
-    }
-
-    // Si es admin, muestra la vista correspondiente
-    return view('admin.usuarios.index');
-})->name('admin.usuarios.index');
+Route::post('/admin/users/store', [AdminUsers::class, 'store'])->name('admin.users.store');
+Route::post('/admin/users/upload', [AdminUsers::class, 'uploadCsv'])->name('admin.users.upload');
 
 // Otras rutas de tu aplicación
 Route::view('dashboard', 'dashboard')->middleware('auth')->name('dashboard');

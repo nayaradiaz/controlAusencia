@@ -28,17 +28,15 @@ new class extends Component
                     </a>
                 </div>
 
-                @if(auth()->check() && auth()->user()->role === 'admin')
+                @if(auth()->check() && auth()->user()->hasRole('Admin'))
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <!-- Enlace en la barra de navegación (sin $emit aquí) -->
-                    <x-nav-link :href="route('dashboard', ['showUsers' => true])" :active="request()->routeIs('dashboard')" wire:navigate>
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Administrar Usuarios') }}
                     </x-nav-link>
-
-
-
                 </div>
                 @endif
+
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

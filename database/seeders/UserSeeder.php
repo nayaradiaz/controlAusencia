@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Department;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -15,25 +14,36 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $department = Department::first(); // El primer departamento disponible.
+        // Obtener los roles existentes
+        $adminRole = Role::where('name', 'Admin')->first();
+        $professorRole = Role::where('name', 'Profesor')->first();
 
-        // Crear el usuario Admin
-        User::create([
+        // Crear el usuario Admin solo si no existe
+        $adminUser = User::firstOrCreate([
+            'email' => 'admin@example.com', // Evita duplicados por email
+        ], [
             'name' => 'Admin',
             'surnames' => 'Administrator',
-            'email' => 'admin@example.com',
-            'department_id' => null, 
             'password' => Hash::make('qwerty-1234'), // Contraseña predeterminada
-            'role' => 'admin',
         ]);
-         // Crear el usuario Admin
-         User::create([
-            'name' => 'usuario',
-            'surnames' => 'usuario',
-            'email' => 'usuario@example.com',
-            'department_id' => $department['id'], 
+
+        // Asignar el rol de Admin
+        if ($adminRole) {
+            $adminUser->assignRole($adminRole);
+        }
+
+        // Crear un usuario regular solo si no existe
+        $usuario = User::firstOrCreate([
+            'email' => 'usuario@example.com', // Evita duplicados por email
+        ], [
+            'name' => 'Usuario',
+            'surnames' => 'Usuario',
             'password' => Hash::make('qwerty-1234'), // Contraseña predeterminada
-            'role' => 'usuario',
         ]);
+
+        // Asignar el rol de Profesor
+        if ($professorRole) {
+            $usuario->assignRole($professorRole);
+        }
     }
 }
